@@ -1,0 +1,24 @@
+extends ./layout.jade
+
+block content
+    .container
+        br
+        .row
+            .col-md-6
+                h1 Search documents
+                form(role="form", action="/docs/search/", method="GET")
+                    div.form-group
+                        label(for="docsearch") Search...
+                        input.form-control(type="search", id="q", name="q", placeholder="Enter search term...")
+                    button.btn.btn-primary(type="submit") Submit
+            .col-md-6
+                h1 Search entities
+                form(role="form", action="/search/", method="GET")
+                    div.form-group
+                        label(for="entitysearch") Search...
+                        input.form-control(type="search", id="q", name="q", placeholder="Search People, Companies, Departments...")
+                    button.btn.btn-primary(type="submit") Submit
+        br
+        .row
+            .col-md-12
+                h4 Want suggestions?  Search for "rahm" or "ethics".

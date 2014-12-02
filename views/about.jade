@@ -1,0 +1,51 @@
+extends ./layout.jade
+
+block content
+    .container
+        .row
+            h1 About the Data and Service
+            br
+            p The source data are datasets from Chicago's Open Government data portal.  Only a few lobbyist-related datasets were chosen, but 
+                a(href="https://data.cityofchicago.org/browse?q=lobby&sortBy=relevance&utf8=%E2%9C%93") more could readily be added.
+            p. 
+                Data come as "documents."  Each "document" appears to be a table row, which is likely the result of an SQL query.  Of the loaded 
+                data, the documents record registered lobbyists, who they work for, and who they lobbbied.  Some also record gifts given 
+                from registered lobbyists to government agency representatives.  Because the focus is on the "registration" aspect of a 
+                lobbyist or a gift donation, named lobbyists, the companies they work for, the lobbied agencies, and the agency representatives 
+                are not uniquely identified.  They are in the source documents as strings.
+            p Example "lobbyist registration" documents
+                ul 
+                    li 
+                        a(href="/docs/lobbyists/4E050B2D-E882-455C-8B9D-2335DC971947.html") /docs/lobbyists/4E050B2D-E882-455C-8B9D-2335DC971947.html
+                    li
+                        a(href="/docs/lobbyists/97FECDD1-9924-43BD-AD7E-0F5ACA91003D.html") /docs/lobbyists/97FECDD1-9924-43BD-AD7E-0F5ACA91003D.html
+            p Example of "gift" documents
+                ul
+                    li
+                        a(href="/docs/gifts/6D55DF9A-5275-42BE-AA85-FDEF10B983CB.html") /docs/gifts/6D55DF9A-5275-42BE-AA85-FDEF10B983CB.html
+                    li
+                        a(href="/docs/gifts/130F7E28-29A1-4E22-A72C-1430725E22C7.html") /docs/gifts/130F7E28-29A1-4E22-A72C-1430725E22C7.html
+                        
+            p NB: You can change the extension of the above links to "xml" to see the stored XML document.
+            br
+            p.
+                Despite the limitations imposed by the source data/documents, each entity - People, such as lobbyists and gift recipients, 
+                and Organizations, such as lobbying firms and lobbied agencies - have been extracted and given identifiers. These data are 
+                represented as triples within documents and queried using SPARQL.
+            p Example people
+                ul 
+                    li 
+                        a(href="/resources/people/rahmemanuel.html") Rahm Emanuel (Mayor)
+                    li
+                        a(href="/resources/people/dunnjohnf.html") John Dunn (Lobbyist)
+            p Example organizations
+                ul
+                    li
+                        a(href="/resources/organizations/verizon.html") Verizon (Represented Firm)
+                    li
+                        a(href="/resources/organizations/boardofethics.html") Board of Ethics (Government Agency)
+            br 
+            p It is possible to search for either documents or entities.  
+                a(href="/gettingstarted.html") Get started here.
+            br 
+                    

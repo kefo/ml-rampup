@@ -1,0 +1,36 @@
+.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Lobbying Chicago
+        .collapse.navbar-collapse.navbar-right
+            ul.nav.navbar-nav
+                 if results
+                    form.navbar-form.navbar-left(role="form", action=results.searchpage, method="GET")
+                        .form-group
+                            .col-xs-8
+                                - if (results.searchpage.indexOf("docs") > 0) 
+                                    input.form-control(type="search", style="width: 350px;", id="q", name="q", placeholder="Enter search term...")
+                                - else
+                                    input.form-control(type="search", style="width: 350px;", id="q", name="q", placeholder="Search People, Companies, Departments...")
+                        button.btn.btn-primary(type="submit") Submit
+                 else if searchpage
+                    form.navbar-form.navbar-left(role="form", action=searchpage, method="GET")
+                        .form-group
+                            .col-xs-8
+                                - if (searchpage.indexOf("docs") > 0) 
+                                    input.form-control(type="search", style="width: 350px;", id="q", name="q", placeholder="Enter search term...")
+                                - else
+                                    input.form-control(type="search", style="width: 350px;", id="q", name="q", placeholder="Search People, Companies, Departments...")
+                        button.btn.btn-primary(type="submit") Submit
+                 else
+                    form.navbar-form.navbar-left(role="form", action="/search/", method="GET")
+                        .form-group
+                            input.form-control(type="search", style="width: 350px;", id="q", name="q", placeholder="Search People, Companies, Departments...")
+                        button.btn.btn-primary(type="submit") Submit
+
+    

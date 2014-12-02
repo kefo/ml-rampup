@@ -1,0 +1,130 @@
+extends ./layout.jade
+
+block content
+    //
+       Main jumbotron for a primary marketing message or call to action 
+    .container
+        div
+            br
+            .row
+                .col-md-3
+                    .panel.panel-primary
+                        .panel-heading Active Search Terms
+                        ul.nav.nav-pills.nav-stacked
+                            if results.qparams.length === 0
+                                li(role="presentation") No active search terms.
+                            else
+                                each q in results.qparams
+                                    li(role="presentation")
+                                        a(href=results.searchpage + "?q=" + q.newsearch) #{q.query}
+                                            span.badge.pull-right X
+                                
+                    if results.facets
+                        each f in results.facets
+                            .panel.panel-primary
+                                .panel-heading #{f.label}
+                                ul.nav.nav-pills.nav-stacked
+                                    if f.facetValues.length === 1 && f.facetValues[0].selected === true
+                                        li(role="presentation") No additional terms.
+                                    else
+                                        each v, i in f.facetValues
+                                            if i < 11
+                                                li(role="presentation")
+                                                    if !v.selected
+                                                        a(href=results.searchpage + "?q=" + f.fname + ":\"" + v.value + "\"&q=" + results.queryqs) #{v.name}
+                                                            span.badge #{v.count}
+                                if f.facetValues.length > 10
+                                    div(id=f.fname+"extra", style="display: none;")
+                                        ul.nav.nav-pills.nav-stacked
+                                            each v, i in f.facetValues
+                                                if i > 10
+                                                    li(role="presentation")
+                                                        if !v.selected
+                                                            a(href=results.searchpage + "?q=" + f.fname + ":\"" + v.value + "\"&q=" + results.queryqs) #{v.name}
+                                                                span.badge #{v.count}
+                                    div
+                                        button.btn.btn-primary(type="button", onclick="$('#" + f.fname + "extra').toggle();") More/Less
+                .col-md-9 
+                    if msg != ""
+                        p 
+                            strong Number of hits: #{results.total}
+                        +pagination
+                                        
+                        each r in results.hits
+                            h2 
+                                a(href='#{r.documentinfo.luri}.html') #{r.documentinfo.lname}
+                            table.table.table-striped
+                                tbody
+                                    if r.documentinfo.lfor
+                                        tr
+                                            td Lobbied For
+                                            td #{r.documentinfo.lfor}
+                                    if r.documentinfo.lobbied
+                                        tr
+                                            td Lobbied Dept.
+                                            td #{r.documentinfo.llobbied}
+                                    if r.documentinfo.lobbyist
+                                        tr
+                                            td Lobbyist
+                                            td #{r.documentinfo.lobbyist}
+                                    if r.documentinfo.lobbiedby
+                                        tr
+                                            td Lobbied By
+                                            td #{r.documentinfo.lobbiedby}
+                                    
+                        
+                        +pagination
+
+mixin pagination
+    nav
+        ul.pagination
+            if results.total > 0
+                if results.pagenumber == 1
+                    li.disabled
+                        a(href="#")
+                            span(aria-hidden="true") &laquo;
+                            span.sr-only Previous
+                else
+                    li
+                        a(href=results.searchpage + "?q=" + results.queryqs + "&page=" + (results.pagenumber - 1))
+                            span(aria-hidden="true") &laquo;
+                            span.sr-only Previous
+
+                if results.pagenumber > 20
+                    li.disabled
+                        span(aria-hidden="true") ...
+                    - for (var x = results.pagenumber; x < (results.pagenumber + 20); x++)
+                        if results.pagenumber == x
+                            li.active
+                                span #{x}
+                                    span.sr-only (current)
+                        else if ( (results.numberofpages+1) > x ) 
+                            li
+                                a(href=results.searchpage + "?q=" + results.queryqs + "&page=" + x) #{x}
+                else
+                    - for (var x = 1; x < 21; x++)
+                        if results.pagenumber == x
+                            li.active
+                                span #{x}
+                                    span.sr-only (current)
+                        else if ( (results.numberofpages+1) > x ) 
+                            li
+                                a(href=results.searchpage + "?q=" + results.queryqs + "&page=" + x) #{x}
+                                
+                if results.numberofpages > results.pagenumber
+                    li.disabled
+                        span(aria-hidden="true") ...
+                else if results.numberofpages > ( results.pagenumber + 20 )
+                    li.disabled
+                        span(aria-hidden="true") ...
+                        
+                if results.pagenumber == results.numberofpages
+                    li.disabled
+                        a(href="#")
+                            span(aria-hidden="true") &raquo;
+                            span.sr-only Next
+                else
+                    li
+                        a(href=results.searchpage + "?q=" + results.queryqs + "&page=" + (results.pagenumber + 1))
+                            span(aria-hidden="true") &raquo;
+                            span.sr-only Next

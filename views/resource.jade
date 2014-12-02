@@ -1,0 +1,132 @@
+extends ./layout.jade
+
+block content
+    //
+       Main jumbotron for a primary marketing message or call to action 
+    .container
+        h1 #{lname}
+        table.table.table-striped
+            tbody
+                tr
+                    td Name
+                    td 
+                        - if (ljson["http://marklogic.com/chigovdata/vocab#description"]) 
+                             = ljson["http://marklogic.com/chigovdata/vocab#description"][0].o
+                        - else
+                            = ljson["http://xmlns.com/foaf/0.1/name"][0].o
+                tr
+                    td Type
+                    td 
+                        ul
+                            each val in ljson['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']
+                                li 
+                                    - if (val.o.indexOf('#') > 1)
+                                        = val.o.substring(val.o.lastIndexOf('#')+1) 
+                                    - else 
+                                        = val.o.substring(val.o.lastIndexOf('/')+1) 
+                if ljson['http://marklogic.com/chigovdata/vocab#hasRepresentative']
+                    tr
+                        td Lobbyist
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#hasRepresentative']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#representativeOf']
+                    tr
+                        td Lobbyist
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#representativeOf']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#givenTo']
+                    tr
+                        td Gift Given To
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#givenTo']
+                                    li 
+                                        a(href=val.o + '.html') #{val.l} 
+                                        a(href=ljson['http://marklogic.com/chigovdata/vocab#receivingAgency'][0].o + ".html") (#{ljson['http://marklogic.com/chigovdata/vocab#receivingAgency'][0].l})
+                                            
+                if ljson['http://marklogic.com/chigovdata/vocab#givenBy']
+                    tr
+                        td Gift Given By
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#givenBy']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l} 
+                                       a(href=ljson['http://marklogic.com/chigovdata/vocab#giftingFirm'][0].o + ".html") (#{ljson['http://marklogic.com/chigovdata/vocab#giftingFirm'][0].l})
+                if ljson['http://marklogic.com/chigovdata/vocab#lobbyist']
+                    tr
+                        td Lobbyist
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#lobbyist']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#employs']
+                    tr
+                        td Employs
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#employs']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#lobbiedBy']
+                    tr
+                        td Lobbied By
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#lobbiedBy']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#employedBy']
+                    tr
+                        td Employed By
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#employedBy']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#lobbiedFor']
+                    tr
+                        td Lobbied For
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#lobbiedFor']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#lobbied']
+                    tr
+                        td Lobbied
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#lobbied']
+                                    li 
+                                       a(href=val.o + '.html') #{val.l}
+                if ljson['http://marklogic.com/chigovdata/vocab#gave']
+                    tr
+                        td Gave Gift(s)
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#gave']
+                                    li 
+                                       a(href=val.o + '.html') #{val.o}
+                if ljson['http://marklogic.com/chigovdata/vocab#received']
+                    tr
+                        td Received Gift(s)
+                        td 
+                            ul
+                                each val in ljson['http://marklogic.com/chigovdata/vocab#received']
+                                    li 
+                                       a(href=val.o + '.html') #{val.o}
+                tr
+                    td Found in document
+                    td 
+                        ul
+                            each val in ljson['http://marklogic.com/chigovdata/vocab#foundIn']
+                                li 
+                                   a(href=val.o.replace('.xml', '.html')) #{val.o}
