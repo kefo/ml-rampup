@@ -26,7 +26,7 @@ module.exports = function (app) {
                     res.type('application/json');
                     res.send(lobbyist.ljson);
                 } else {
-                    res.render('lobbyist', doc);
+                    res.render('document', lobbyist);
                 }
             }
         });
