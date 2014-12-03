@@ -1,0 +1,17 @@
+extends ./layout.jade
+
+block content
+    //
+       Main jumbotron for a primary marketing message or call to action 
+    .container
+        h1 #{lname}
+        table.table.table-striped
+            thead
+                tr
+                    th Field
+                    th Data
+            tbody
+                each val, index in ljson
+                    tr
+                        td #{index}
+                        td #{val}
